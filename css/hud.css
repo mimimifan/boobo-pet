@@ -1,0 +1,20 @@
+/* hud.css : 滚动离开舞台后吸顶显示的迷你状态条 */
+.hud-bar{position:fixed;left:0;right:0;top:0;z-index:15;display:flex;align-items:center;gap:8px;padding:7px 10px;background:#fdf9eaf2;border-bottom:3px solid #5d8366;box-shadow:0 3px 0 #c3d4bd80;font-family:ui-monospace,"Noto Sans Mono CJK SC",monospace;animation:hud-in .18s steps(2,end)}
+@keyframes hud-in{from{transform:translateY(-100%)}to{transform:translateY(0)}}
+.hud-back{flex:0 0 auto;padding:6px 8px;background:#6ea97c;color:#fff;border:2px solid #41694f;border-radius:4px;font-size:10px;font-weight:800;letter-spacing:.5px;box-shadow:2px 2px 0 #41694f}
+.hud-back:active{transform:translate(1px,1px);box-shadow:0 0 0}
+.hud-stats{flex:1;min-width:0;display:flex;gap:5px}
+.hud-cell{flex:1;min-width:0;display:grid;gap:3px}
+.hud-cell em{display:flex;justify-content:space-between;gap:2px;font-style:normal;font-size:8.5px;line-height:1;color:#7d9382}
+.hud-cell em b{color:#46654d;font-variant-numeric:tabular-nums}
+.hud-cell i{display:block;height:7px;background:#e4ebdc;border:2px solid #9fba9f}
+.hud-cell i s{display:block;height:100%;text-decoration:none;transition:width .3s steps(8,end)}
+.hud-cell.low i{border-color:#e08a8a}
+.hud-c0 s{background:#e3a95f}.hud-c1 s{background:#e18fa3}.hud-c2 s{background:#7fa8d3}.hud-c3 s{background:#9d86d4}
+.hud-star{flex:0 0 auto;display:flex;align-items:center;gap:3px;padding:5px 7px;background:#fff6d6;border:2px solid #bf8c2c;font-size:11px;font-weight:900;color:#7a5c1d}
+.hud-star span{color:#bf8c2c}
+@media (max-width:380px){
+  .hud-bar{gap:6px;padding:6px 8px}
+  .hud-cell em{font-size:8px}
+  .hud-back{padding:6px 5px;font-size:9.5px}
+}
