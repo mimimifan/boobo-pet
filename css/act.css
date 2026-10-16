@@ -1,0 +1,218 @@
+/* act.css v16 : 家具互动。不再用虚线提示框（会和地面阴影冲突变成黑块），改成点击时轻弹 */
+.rm-fur.tappable{pointer-events:auto;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.rm-fur.tap-pop{animation:tap-pop .3s steps(3,end)}
+@keyframes tap-pop{50%{translate:0 -3px}}
+
+/* 电视：屏幕提到电视图上层；关机黑屏，开机轮播三个小画面 */
+.rm-fur .scr{z-index:1}
+.rm-tv .scr{position:absolute;left:21.9%;top:21.9%;width:43.8%;height:31.3%;overflow:hidden;pointer-events:none;/* tv-standby 息屏 */background:linear-gradient(135deg,transparent 0 16%,#ffffff26 16% 24%,transparent 24% 36%,#ffffff14 36% 40%,transparent 40%),#2f3a4f}
+.rm-tv .scr i{position:absolute;inset:0;display:grid;place-items:center;opacity:0}
+.tv-on .rm-tv .scr{background:#4a6a9e}
+.tv-on .rm-tv .scr i{animation:tv-cycle 6s steps(1,end) infinite}
+.tv-on .rm-tv .scr i:nth-child(2){animation-delay:-4s}
+.tv-on .rm-tv .scr i:nth-child(3){animation-delay:-2s}
+@keyframes tv-cycle{0%{opacity:1}33.3%,100%{opacity:0}}
+.rm-tv .scr b{display:block;width:5px;height:5px;background:#ffe9a6;box-shadow:-7px -3px #ffe9a6,7px -3px #ffe9a6,-4px 4px #ffe9a6,0 5px #ffe9a6,4px 4px #ffe9a6}
+.rm-tv .scr s{display:block;width:9px;height:9px;background:#f2a7b5;text-decoration:none;box-shadow:inset -3px -3px #d4798c;animation:tv-ball .9s steps(4,end) infinite alternate}
+@keyframes tv-ball{from{translate:-10px 4px}to{translate:10px -4px}}
+.rm-tv .scr u{display:block;width:4px;height:4px;background:#ffe9a6;text-decoration:none;box-shadow:0 -5px #ffe9a6,0 5px #ffe9a6,-5px 0 #ffe9a6,5px 0 #ffe9a6,-10px -6px #fff3cf,11px 6px #fff3cf;animation:tv-twk 1.2s steps(2,end) infinite}
+@keyframes tv-twk{50%{opacity:.4}}
+
+/* 手动开关灯 */
+#petStage.lamp-on .rm-glow{opacity:.9 !important}
+#petStage.lamp-off .rm-glow{opacity:0 !important}
+#petStage.lamp-on[data-time="night"]:after,#petStage.lamp-on.is-asleep:after{opacity:.08}
+
+/* 喂鱼：鱼身小幅蹿动叠加在游泳动画上，不打断游泳 */
+.fish-feed .rm-tank .fish svg{animation:fish-rush .4s steps(2,end) 6}
+@keyframes fish-rush{50%{translate:0 -3px}}
+.fish-feed .rm-tank:after{content:"";position:absolute;z-index:2;left:46%;top:14%;width:3px;height:3px;background:#e39a6a;box-shadow:5px 3px #e39a6a,-4px 5px #e39a6a;animation:food-sink 1.8s steps(9,end) forwards}
+@keyframes food-sink{from{translate:0 0;opacity:1}to{translate:0 26px;opacity:0}}
+
+/* 客厅里啵啵始终在家具前面，不会被鱼缸、玩具箱挡住 */
+/* 客厅：啵啵在家具层(3)和前景层(5)之间，鱼缸在前景挡住啵啵 */
+#petStage.pet-sit .pet-button,#petStage.pet-watch .pet-button,#petStage.pet-look .pet-button{left:var(--pet-x,50%);bottom:var(--pet-b,16px)}
+#petStage.pet-play .pet-button{left:56%;bottom:16px}
+#petStage.pet-look .pet-character{rotate:-7deg}
+#petStage.pet-watch .pet-character{scale:1.02 .95}
+
+/* 玩具：小汽车开来开去 / 皮球弹跳 / 积木晃悠 */
+.pet-toy{position:absolute;left:50%;bottom:3%;z-index:3;width:34%;transform:translateX(-50%);pointer-events:none}
+.pet-toy svg{display:block;width:100%;height:auto;image-rendering:pixelated}
+.pet-toy.toy-car{animation:toy-car 1.2s steps(4,end) infinite alternate}
+@keyframes toy-car{from{translate:-16px 0}to{translate:16px 0}}
+.pet-toy.toy-ball{width:24%;animation:toy-ball .45s steps(3,end) infinite alternate}
+@keyframes toy-ball{from{translate:0 0}to{translate:0 -18px}}
+.pet-toy.toy-block{width:30%;animation:toy-blk .8s steps(2,end) infinite alternate}
+@keyframes toy-blk{from{rotate:-4deg}to{rotate:4deg}}
+
+/* 坐姿：藏起站立的脚和影子，露出向前伸的小脚 */
+.sit-legs{display:none}
+#petStage.pet-sit .sit-legs{display:inline}
+#petStage.pet-sit .pet-svg rect[y="112"],#petStage.pet-sit .pet-svg rect[y="104"],
+#petStage.pet-sit .pet-svg > g > rect:last-of-type{display:none}
+#petStage.pet-sit .pet-character{scale:1 .97;animation:none}
+
+/* BOOBO_ACT_V19 : 每盏灯独立开关 / 吸顶灯光源 / 厨房站位 / 桌上的菜 */
+#petStage.lamp-lamp-on .rm-lamp .rm-glow,
+#petStage.lamp-floorlamp-on .rm-floorlamp .rm-glow,
+#petStage.lamp-ceiling-on .rm-ceiling .rm-glow{opacity:.9 !important}
+#petStage.lamp-lamp-off .rm-lamp .rm-glow,
+#petStage.lamp-floorlamp-off .rm-floorlamp .rm-glow,
+#petStage.lamp-ceiling-off .rm-ceiling .rm-glow{opacity:0 !important}
+#petStage.lamp-any-on[data-time="night"]:after,#petStage.lamp-any-on.is-asleep:after{opacity:.08}
+/* 光从灯口往下散，不再跑到灯下面老远 */
+.rm-ceiling .rm-glow{top:96%;width:200px;height:200px}
+/* 有餐桌时啵啵站到椅子右边 */
+#petStage[data-scene="kitchen"].has-dtable .pet-button{left:78%}
+#petStage[data-scene="kitchen"].has-dtable.pet-sit .pet-button{left:var(--pet-x,52%);bottom:var(--pet-b,27px)}
+/* 吃饭时摆到餐垫上的那道菜 */
+#tableDish{position:absolute;z-index:6;transform:translateX(-50%);pointer-events:none;animation:rm-in .3s steps(3,end)}
+#tableDish svg{display:block;width:100%;height:auto;image-rendering:pixelated}
+/* END BOOBO_ACT_V19 */
+
+/* BOOBO_POSE_V30 : 荡秋千 / 躺吊床 / 看书 / 打滚。放在最后，压过前面的 animation:none */
+#petStage.pet-swing.pet-sit .pet-character{scale:1;animation:bb-swing 2.6s cubic-bezier(.45,0,.55,1) infinite alternate}
+@keyframes bb-swing{from{rotate:-7deg;translate:-11px 1px}to{rotate:7deg;translate:11px 1px}}
+/* 躺吊床：不压扁，微微侧躺 + 呼吸起伏，脚和影子收起来让前沿布边盖住下半身 */
+#petStage.pet-lie .pet-button{left:var(--pet-x,50%);bottom:var(--pet-b,14px)}
+#petStage.pet-lie .pet-character{scale:1;rotate:-8deg;transform-origin:50% 86%;animation:bb-rest 4.6s ease-in-out infinite alternate}
+@keyframes bb-rest{from{translate:0 0}to{translate:0 -2px}}
+#petStage.pet-lie .sit-legs{display:none}
+#petStage.pet-lie .pet-svg rect[y="112"],#petStage.pet-lie .pet-svg rect[y="104"],
+#petStage.pet-lie .pet-svg > g > rect:last-of-type{display:none}
+/* 看书：坐下来翻画册 */
+#petStage.pet-read .pet-button{left:62%;bottom:16px}
+#petStage.pet-read .sit-legs{display:inline}
+#petStage.pet-read .pet-svg rect[y="112"],#petStage.pet-read .pet-svg rect[y="104"],
+#petStage.pet-read .pet-svg > g > rect:last-of-type{display:none}
+#petStage.pet-read .pet-character{scale:1 .97;animation:bb-read 3.4s steps(2,end) infinite}
+@keyframes bb-read{50%{translate:0 -2px}}
+.pet-book{position:absolute;left:50%;bottom:4%;z-index:3;width:46%;transform:translateX(-50%);pointer-events:none}
+.pet-book svg{display:block;width:100%;height:auto;image-rendering:pixelated}
+/* 在地毯上打滚 */
+#petStage.pet-roll .pet-character{animation:bb-roll 1s steps(6,end) 4}
+@keyframes bb-roll{from{rotate:0;translate:0 0}25%{rotate:-90deg;translate:-14px -4px}
+  50%{rotate:-180deg;translate:0 0}75%{rotate:-270deg;translate:14px -4px}to{rotate:-360deg;translate:0 0}}
+/* END BOOBO_POSE_V30 */
+
+/* BOOBO_POLISH_V31 */
+/* 点击范围缩到身体：其余空白穿透，仍保留按钮键盘操作 */
+#petStage .pet-button,#petStage .pet-character,#petStage .pet-svg{pointer-events:none}
+#petStage .pet-character:after{content:"";position:absolute;left:15%;top:19%;width:70%;height:49%;border-radius:50%;pointer-events:auto;cursor:pointer}
+#petStage .pet-button:focus-visible{outline:2px solid #527a60;outline-offset:2px}
+#petStage .pet-character .pet-expression,#petStage .zzz{pointer-events:none}
+#petStage.pet-read .pet-book{bottom:34%}
+#petStage.pet-roll .pet-character{transform-origin:50% 55%;animation:bb-roll31 1s steps(6,end) 4;translate:0 0;rotate:0deg}
+@keyframes bb-roll31{0%,100%{rotate:0deg}25%{rotate:-90deg}50%{rotate:-180deg}75%{rotate:-270deg}}
+/* 秋千绳、座板、啵啵共用一个容器，正面前后荡 */
+.bb-swing-group{position:absolute;inset:0;z-index:4;pointer-events:none;animation:bb-depth31 2.8s ease-in-out infinite}
+#petStage.pet-swing.pet-sit .pet-character{animation:none;rotate:0deg;translate:0 0;scale:1}
+#petStage.pet-swing .rm-swseat{animation:none;rotate:0deg;translate:0 0}
+#petStage.pet-swing .pet-button{transition:none}
+@keyframes bb-depth31{0%,100%{transform:translateY(-3px) scale(.96,.94)}50%{transform:translateY(4px) scale(1.06,1.03)}}
+#petStage.pet-lie .pet-character{rotate:-6deg;transform-origin:50% 55%}
+/* 鸟从右上方落下，低头啄食，再飞离 */
+#petStage .rm-feeder .fd-bird{left:26%;bottom:59%;width:54%;height:25%;background:none;box-shadow:none;opacity:0;display:block;translate:0 0}
+#petStage .fd-bird svg{width:100%;height:100%;transform-origin:60% 85%}
+#petStage.bird-come .fd-bird{animation:bb-bird31 6s linear forwards}
+#petStage.bird-come .fd-bird svg{animation:bb-peck31 .65s steps(2,end) 6;animation-delay:1s}
+@keyframes bb-bird31{0%{opacity:0;transform:translate(32px,-40px)}15%,80%{opacity:1;transform:translate(0,0)}100%{opacity:0;transform:translate(-46px,-48px)}}
+@keyframes bb-peck31{50%{transform:rotate(14deg) translateY(2px)}}
+/* 绿化铺满背景边缘，中央留出家具与站立空间 */
+.rm-yard .yg-land{display:none;position:absolute;inset:0;pointer-events:none}
+#petStage.yard-green .rm-yard .yg-land{display:block}
+.rm-yard .yg-shrub{position:absolute;width:54px;height:24px;background:#71aa62;border:3px solid #497944;box-shadow:inset 0 5px #99c67a,4px 3px #497944;clip-path:polygon(0 30%,12% 30%,12% 12%,32% 12%,32% 0,68% 0,68% 12%,88% 12%,88% 30%,100% 30%,100% 100%,0 100%);transform:translateX(-50%)}
+.rm-yard .yg-tree{position:absolute;bottom:83px;width:8px;height:53px;background:#a87950;border:2px solid #6e4a30;transform:translateX(-50%)}
+.rm-yard .yg-tree:before{content:"";position:absolute;left:-17px;top:-14px;width:38px;height:38px;background:#75ad61;box-shadow:inset 0 7px #a1cc80,inset -6px -7px #4f864a;clip-path:polygon(20% 0,80% 0,80% 15%,100% 15%,100% 80%,80% 80%,80% 100%,20% 100%,20% 80%,0 80%,0 15%,20% 15%)}
+.rm-yard .yg-flowers{position:absolute;width:51px;height:16px;background:repeating-linear-gradient(90deg,transparent 0 6px,#659351 6px 9px,transparent 9px 15px);border-bottom:3px solid #547e43;transform:translateX(-50%)}
+.rm-yard .yg-flowers:before{content:"";position:absolute;width:4px;height:4px;left:6px;top:2px;background:#f7d573;box-shadow:-3px 0 #edabb5,3px 0 #edabb5,0 -3px #edabb5,0 3px #edabb5,15px 4px #fff0b0,12px 4px #c6b4df,18px 4px #c6b4df,15px 1px #c6b4df,15px 7px #c6b4df,30px 0 #fff0b0,27px 0 #f3c75c,33px 0 #f3c75c,30px -3px #f3c75c,30px 3px #f3c75c}
+#petStage.yard-green[data-time="night"] .yg-land{filter:brightness(.65) saturate(.8)}
+#petStage.yard-green[data-time="dusk"] .yg-land{filter:sepia(.16) brightness(.87)}
+#petStage.yard-green[data-time="dawn"] .yg-land{filter:brightness(.88)}
+/* END BOOBO_POLISH_V31 */
+
+/* BOOBO_POLISH_V32 */
+#petStage.pet-read .pet-book{bottom:20%;width:40%}
+#petStage.pet-read .pet-hug,#petStage.pet-eating .pet-hug,#petStage.pet-eating .pet-book{display:none}
+#petStage.sleep-bed .pet-character:after{pointer-events:none}
+#petStage.sleep-bed .rm-cover{pointer-events:auto;cursor:pointer}
+/* 旋转只作用于翼片；躯干分段落地、跳步、低头、起飞 */
+#petStage .rm-feeder .fd-bird{bottom:59%;overflow:visible}
+.bb-bird-body{display:block;position:relative;width:100%;height:100%;transform-origin:60% 80%}
+#petStage .fd-bird .bb-bird-wing{position:absolute;left:21%;top:36%;width:49%;height:48%;transform-origin:12% 85%;transform:rotate(-8deg)}
+#petStage.bird-come .fd-bird{animation:bb-flight32 6s linear forwards}
+#petStage.bird-come .fd-bird .bb-bird-body>svg{animation:bb-posture32 6s steps(2,end) forwards;transform-origin:60% 85%}
+#petStage.bird-come .fd-bird .bb-bird-wing{animation:bb-flap32 .12s steps(2,end) 8,bb-flap32 .12s steps(2,end) 10 4.8s}
+#petStage.bird-come .bb-bird-body>svg rect[fill="#172b36"]{animation:bb-blink32 2.1s steps(1,end) infinite}
+@keyframes bb-flap32{0%,100%{transform:rotate(-18deg) scaleY(.6)}50%{transform:rotate(-75deg) scaleY(1.3)}}
+@keyframes bb-flight32{0%{opacity:0;transform:translate(35px,-38px) scale(.85)}4%{opacity:1}8%{transform:translate(21px,-29px)}16%{transform:translate(0,0)}20%{transform:translate(-2px,-5px)}24%,76%{transform:translate(0,0)}80%{transform:translate(-3px,-9px)}88%{opacity:1;transform:translate(-17px,-24px) scale(.95)}100%{opacity:0;transform:translate(-43px,-48px) scale(.75)}}
+@keyframes bb-posture32{0%,27%,43%,57%,73%,100%{transform:rotate(0deg)}33%,38%,63%,68%{transform:rotate(15deg) translateY(2px)}}
+@keyframes bb-blink32{0%,94%,100%{opacity:1}95%,99%{opacity:0}}
+/* 缩短秋千；绳顶以横梁下缘为轴，不再上下错开 */
+#petStage .bb-swing-group{animation:bb-depth32 2.8s ease-in-out infinite}
+@keyframes bb-depth32{0%,100%{transform:scale(.98,.94)}50%{transform:scale(1.04,1.04)}}
+/* 绿化渐显，不在普通数值刷新时重复播 */
+.rm-yard .yg-land.green-in{animation:bb-green32 .65s steps(6,end) both}
+@keyframes bb-green32{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.rm-yard .yg-shrub:after{content:"";position:absolute;left:10px;top:7px;width:3px;height:3px;background:#efd484;box-shadow:18px 3px #eaa8b5,29px -2px #e8d9ee}
+.rm-yard .yg-flowers:after{content:"";position:absolute;left:-3px;right:-3px;bottom:-6px;height:3px;background:repeating-linear-gradient(90deg,#c5b79d 0 7px,#998d76 7px 9px)}
+.rm-yard .yg-tree:after{content:"";position:absolute;left:-6px;top:21px;width:7px;height:4px;background:#96673f;box-shadow:10px -6px #96673f}
+.rm-yard .yg-tuft{position:absolute;width:3px;height:8px;background:#8dba68;box-shadow:5px -3px #78a45b,10px 1px #9ac479}
+/* 拍球、猜拳共用淡紫色软团子 */
+#gameContent .rps-avatar.player-avatar{border-color:#a68ab7;background:#f5edf9;display:grid;place-items:center}
+#gameContent .player-avatar:before,#gameContent .player-avatar:after,#gameContent .player-avatar>i{display:none}
+#gameContent .player-avatar>svg{display:block;width:46px;height:46px;image-rendering:pixelated}
+#gameContent .bal-who.p i{background:#f5edf9;border-color:#a68ab7}
+.pet-hand-dish{position:absolute;left:50%;bottom:17%;width:38%;z-index:4;transform:translateX(-50%);pointer-events:none}
+.pet-hand-dish svg{width:100%;height:auto;display:block;image-rendering:pixelated}
+/* END BOOBO_POLISH_V32 */
+
+
+/* BOOBO_V33 */
+#cheatFloat{position:fixed;right:12px;bottom:100px;width:54px;height:54px;border:2px solid #70958a;border-radius:50%;background:#effaf2;box-shadow:0 3px 0 #49695c33;z-index:10000;touch-action:none;padding:7px;cursor:pointer}
+#cheatFloat[hidden]{display:none}
+#cheatFloat svg{display:block;width:100%;height:100%;overflow:visible}
+#cheatFloat .pet-svg{animation:none;transform:none}
+#cheatMin{margin-left:auto;margin-right:8px}
+#petStage[data-scene="yard"]:not(.pet-sit):not(.pet-swing):not(.pet-look):not(.pet-lie) .pet-button{left:64%}
+#petStage .bb-swing-group{z-index:1;pointer-events:none}
+#petStage .bb-swing-group .pet-button,#petStage .bb-swing-group .rm-swseat{pointer-events:auto}
+#petStage .rm-swing{z-index:4!important}
+#petStage.pet-swing .rm-swseat,#petStage.pet-swing .pet-character{animation:none;rotate:0deg;translate:0 0}
+#petStage .rm-feeder .fd-bird{left:30%;bottom:73.9%;width:40%;height:26.09%;background:none;box-shadow:none}
+#gameContent .player-avatar>svg{width:48px;height:48px}
+#gameContent .bal-who.p i svg{width:100%;height:100%}
+.cook-now-tip{display:block;margin:12px 0;padding:10px;border:2px solid #dbc7a3;background:#fff6df;color:#72553a;font-size:14px}
+
+/* BOOBO_V34 */
+#petStage .bb-swing-ropes{position:absolute;inset:0;z-index:2;pointer-events:none}
+#petStage .bb-swing-group{z-index:4;pointer-events:none}
+#petStage .bb-swing-group,#petStage .bb-swing-ropes{animation:bb-depth34 2.8s ease-in-out infinite}
+#petStage .bb-swing-ropes .rm-swrope{pointer-events:auto;cursor:pointer}
+#petStage .bb-swing-group .rm-swseat{z-index:3!important}
+#petStage .bb-swing-group .pet-button{z-index:4}
+#petStage .rm-swrope{transform:translateX(-50%);pointer-events:auto;cursor:pointer}
+@keyframes bb-depth34{0%,100%{transform:scale(.98,.94)}50%{transform:scale(1.04,1.04)}}
+/* 小鸟尺寸按14×12的像素图定，脚底落在食台第12行 */
+#petStage .rm-feeder .fd-bird{left:18%;bottom:69.5652%;width:70%;height:26.087%;overflow:visible}
+.bb-bird-facing{display:block;width:100%;height:100%;transform:scaleX(-1)}
+#petStage.bird-come .bb-bird-facing{animation:bb-turn34 6s steps(1,end) forwards}
+#petStage.bird-come .fd-bird{animation:bb-flight34 6s linear forwards}
+@keyframes bb-turn34{0%,75%{transform:scaleX(-1)}76%,100%{transform:scaleX(1)}}
+@keyframes bb-flight34{0%{opacity:0;transform:translate(35px,-38px)}4%{opacity:1}8%{transform:translate(21px,-29px)}16%{transform:translate(0,0)}20%{transform:translate(-2px,-5px)}24%,76%{transform:translate(0,0)}80%{transform:translate(3px,-9px)}88%{opacity:1;transform:translate(19px,-24px)}100%{opacity:0;transform:translate(48px,-48px)}}
+#gameContent .bal-who.p i{background:none;border:0;box-shadow:none}
+#gameContent .rps-avatar.player-avatar{background:#fff8eb;border-color:#b7a48c}
+#gameContent .player-avatar>svg{width:48px;height:56px}
+#gameContent .bal-who.p i{width:48px;height:56px}
+#gameContent .bal-who.p b{border-color:#9a8774;background:#fff8eb}
+#cheatFloat{padding:4px;background:#f1faef;box-shadow:0 3px 0 #49695c33,0 0 0 3px #fff9}
+#cheatFloat #originalEyes,#cheatFloat #originalMouth{display:inline}
+#cheatFloat svg{pointer-events:none}
+#cheatFloat .sit-legs{display:none}
+#cheatOverlay .modal-head{position:sticky;top:0;z-index:2;background:#fffaf0;padding-bottom:8px}
+#cheatOverlay .cheat-grid h4{border-bottom:2px solid #d8e2ce;padding-bottom:5px;color:#4e6f55}
+.rm-yard .yg-tree:before{box-shadow:inset 0 7px #a1cc80,inset -6px -7px #4f864a,3px 4px #416a3d33}
+#petStage .bb-bird-feet{position:absolute;inset:0;display:block;pointer-events:none}
+#petStage.bird-come .bb-bird-feet>svg{animation:none;transform:none}
+/* END BOOBO_V34 */

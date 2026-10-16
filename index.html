@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#edf8ed">
+<title>啵啵的秘密小窝</title>
+<link rel="stylesheet" href="css/style.css?v=51">
+<link rel="stylesheet" href="css/room.css?v=51">
+<link rel="stylesheet" href="css/hud.css?v=51">
+<link rel="stylesheet" href="css/scene.css?v=51">
+<link rel="stylesheet" href="css/act.css?v=51">
+<link rel="stylesheet" href="css/flower.css?v=51">
+<link rel="icon" type="image/png" href="assets/bobo001.png?v=1">
+<link rel="apple-touch-icon" href="assets/bobo001.png?v=1">
+<link rel="manifest" href="site.webmanifest">
+<meta name="apple-mobile-web-app-title" content="啵啵">
+</head>
+<body>
+<div class="app">
+  <header>
+    <div>
+      <div class="eyebrow">A TINY WORLD JUST FOR YOU</div>
+      <h1>啵啵的秘密小窝</h1>
+    </div>
+    <div class="star-balance" title="可以用来兑换小窝装饰">
+      <span class="star-symbol">★</span><span id="starBalance">0</span>
+    </div>
+  </header>
+
+  <section class="card hero">
+    <div class="hero-top">
+      <span class="pill">啵啵的日常</span>
+      <span class="day-note">点点它 · 做任务 · 攒星星</span>
+    </div>
+    <div class="stage" id="petStage">
+      <div class="cloud c1"></div><div class="cloud c2"></div>
+      <span class="tiny-star ts1">✦</span><span class="tiny-star ts2">✧</span><span class="tiny-star ts3">✦</span>
+      <div class="room-decor" id="roomDecor"><span class="empty-room">等你来装饰这里</span></div>
+      <button class="pet-button" id="petButton" aria-label="摸摸啵啵">
+        <span class="pet-character" id="petCharacter">
+          <svg class="pet-svg" viewBox="0 0 160 160" role="img" aria-label="薄荷绿像素团子啵啵">
+<g shape-rendering="crispEdges">
+<rect x="48" y="8" width="8" height="16" fill="#527a60"/>
+<rect x="104" y="8" width="8" height="16" fill="#527a60"/>
+<rect x="48" y="8" width="8" height="8" fill="#a8ddb0"/>
+<rect x="104" y="8" width="8" height="8" fill="#a8ddb0"/>
+<rect x="56" y="16" width="48" height="8" fill="#527a60"/>
+<rect x="40" y="24" width="80" height="8" fill="#527a60"/>
+<rect x="24" y="32" width="112" height="8" fill="#527a60"/>
+<rect x="16" y="40" width="128" height="56" fill="#527a60"/>
+<rect x="24" y="96" width="112" height="16" fill="#527a60"/>
+<rect x="40" y="112" width="32" height="8" fill="#527a60"/>
+<rect x="88" y="112" width="32" height="8" fill="#527a60"/>
+<rect x="56" y="24" width="48" height="8" fill="#b8e8b7"/>
+<rect x="40" y="32" width="80" height="8" fill="#b8e8b7"/>
+<rect x="24" y="40" width="112" height="8" fill="#b8e8b7"/>
+<rect x="24" y="48" width="112" height="40" fill="#a2d9a9"/>
+<rect x="32" y="88" width="96" height="16" fill="#a2d9a9"/>
+<rect x="48" y="104" width="24" height="8" fill="#a2d9a9"/>
+<rect x="88" y="104" width="24" height="8" fill="#a2d9a9"/>
+<g id="originalEyes">
+<rect x="48" y="56" width="16" height="16" fill="#365b4b"/>
+<rect x="96" y="56" width="16" height="16" fill="#365b4b"/>
+<rect x="52" y="56" width="4" height="4" fill="#fff"/>
+<rect x="100" y="56" width="4" height="4" fill="#fff"/>
+</g>
+<rect x="36" y="76" width="16" height="8" fill="#edacb6"/>
+<rect x="108" y="76" width="16" height="8" fill="#edacb6"/>
+<g id="originalMouth">
+<rect x="72" y="80" width="8" height="4" fill="#527a60"/>
+<rect x="80" y="84" width="8" height="4" fill="#527a60"/>
+<rect x="88" y="80" width="8" height="4" fill="#527a60"/>
+</g>
+<rect x="32" y="132" width="96" height="8" fill="#8dbc8c"/>
+</g></svg>
+          <span class="pet-expression" id="petExpression" aria-hidden="true">•ᴗ•</span>
+        </span>
+        <span class="zzz">Z z z</span>
+      </button>
+      <div class="room-decor-front" id="roomDecorFront" aria-hidden="true"></div>
+      <div class="fx-layer" id="fxLayer"></div>
+    </div>
+    <div class="speech" id="speech" aria-live="polite">啵啵在这里等你很久啦！</div>
+    <div class="stats">
+      <div class="stat"><div class="stat-head"><span>饱腹度</span><span class="stat-value" id="hungerVal">66%</span></div><div class="bar"><div class="bar-fill" id="hungerBar"></div></div></div>
+      <div class="stat"><div class="stat-head"><span>心情</span><span class="stat-value" id="moodVal">72%</span></div><div class="bar"><div class="bar-fill" id="moodBar"></div></div></div>
+      <div class="stat"><div class="stat-head"><span>体力</span><span class="stat-value" id="energyVal">78%</span></div><div class="bar"><div class="bar-fill" id="energyBar"></div></div></div>
+      <div class="stat"><div class="stat-head"><span>亲密度</span><span class="stat-value" id="bondVal">8%</span></div><div class="bar"><div class="bar-fill" id="bondBar"></div></div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading"><h2>和啵啵玩一会儿</h2><p>每次点击都有回应</p></div>
+    <div class="actions">
+      <button class="action-btn" data-action="feed"><span class="action-icon px-icon" data-icon="cookie"></span><span class="action-label">喂点心</span><span class="action-hint">补充饱腹度</span></button>
+      <button class="action-btn" data-action="pet"><span class="action-icon px-icon" data-icon="heart"></span><span class="action-label">摸摸头</span><span class="action-hint">增加亲密度</span></button>
+      <button class="action-btn" data-action="play"><span class="action-icon px-icon" data-icon="ball"></span><span class="action-label">陪它玩</span><span class="action-hint">打起精神</span></button>
+      <button class="action-btn" id="sleepBtn" data-action="sleep"><span class="action-icon px-icon" data-icon="moon"></span><span class="action-label">哄它睡觉</span><span class="action-hint">恢复体力</span></button>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading"><h2>今日小游戏</h2><p>玩游戏赚星星</p></div>
+    <div class="card game-card">
+      <div class="game-badge game-badge-grid" aria-label="四种小游戏">
+        <span class="game-pixel-icon star"></span>
+        <span class="game-pixel-icon mole"></span>
+        <span class="game-pixel-icon fist"></span>
+      </div>
+      <div class="game-copy"><h3>啵啵的小游戏屋</h3><p>星星收集 · 打地鼠 · 猜拳 · 跳豆腐</p></div>
+      <button class="primary-btn" id="openGame">开玩！</button>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading"><h2>啵啵的小窝商店</h2><p>把星星换成喜欢的装饰</p></div>
+    <div class="card shop-card"><div class="shop-grid" id="shopGrid"></div></div>
+  </section>
+
+
+  <section class="section" id="calendarSection">
+    <div class="section-heading"><h2>啵啵的日历</h2><p>今天也有好好生活</p></div>
+    <div class="card calendar-card">
+      <div class="calendar-head">
+        <button class="calendar-nav" id="calendarPrev" type="button">◀</button>
+        <div class="calendar-month"><strong id="calendarTitle"></strong><small id="calendarTodayLine"></small></div>
+        <button class="calendar-nav" id="calendarNext" type="button">▶</button>
+      </div>
+      <div class="calendar-week"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div>
+      <div class="calendar-days" id="calendarDays"></div>
+      <div class="calendar-detail" id="calendarDetail" aria-live="polite">
+        <strong id="calendarDetailTitle">选择一天</strong>
+        <p id="calendarDetailText">点选日期，就能看看当天的节日与习俗。</p>
+      </div>
+      <button class="calendar-today" id="calendarToday" type="button">回到今天</button>
+    </div>
+  </section>
+
+  <p class="small-note">这里没有离开惩罚，也不会因为你忙了几天就消失。<br>啵啵会一直待在小窝里，等你有空再来玩。</p>
+  <footer>BOOBO'S LITTLE NOOK · 本地自动存档</footer>
+</div>
+
+<div class="overlay" id="gameOverlay" hidden>
+  <div class="game-panel" role="dialog" aria-modal="true" aria-label="啵啵的小游戏">
+    <div class="modal-head"><strong>星星收集大作战</strong><button class="close-btn" id="closeGame" aria-label="关闭游戏">×</button></div>
+    <div id="gameContent"></div>
+  </div>
+</div>
+
+<script src="js/boobo-save.js?v=51" defer></script>
+<script src="js/boobo-room.js?v=51" defer></script>
+<script src="js/boobo-polish.js?v=51" defer></script>
+<script src="js/app.js?v=51" defer></script>
+<script src="js/boobo-plus.js?v=51" defer></script>
+<script src="js/boobo-life.js?v=51" defer></script>
+<script src="js/boobo-cal.js?v=51" defer></script>
+<script src="js/boobo-confirm.js?v=51" defer></script>
+<script src="js/boobo-cheat.js?v=51" defer></script>
+<script src="js/boobo-hud.js?v=51" defer></script>
+<script src="js/boobo-deco.js?v=51" defer></script>
+<script src="js/boobo-flower.js?v=51" defer></script>
+<script src="js/boobo-scene.js?v=51" defer></script>
+<script src="js/boobo-act.js?v=51" defer></script>
+<script src="js/boobo-kitchen.js?v=51" defer></script>
+<script src="js/boobo-yard.js?v=51" defer></script>
+<script src="js/boobo-fold.js?v=51" defer></script>
+<script src="js/boobo-shop.js?v=51" defer></script>
+<script src="js/boobo-court.js?v=51" defer></script>
+</body>
+</html>

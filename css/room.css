@@ -1,0 +1,64 @@
+/* room.css v10 : 房间布局。在 style.css 之后加载，只用 #petStage / .rm-* 等新选择器 */
+#petStage .tiny-star{display:none}
+/* 啵啵保持原始 140px 设计尺寸，统一用 scale 缩放，表情跟着一起缩 */
+#petStage .pet-button{left:50%;bottom:16px;width:140px;height:140px;transform:translateX(-50%) scale(.8);transform-origin:50% 100%}
+#petStage.has-bed .pet-button{left:66%}
+#petStage.sleep-bed .pet-button{left:var(--bed-x,31%);bottom:var(--bed-pb,72px);transform:translateX(-50%) scale(var(--bed-s,.52))}
+#petStage.is-asleep .room-decor,#petStage.is-asleep .room-decor-front{filter:brightness(.85)}
+.pet-hug{position:absolute;left:50%;bottom:11%;z-index:3;width:38%;height:28%;transform:translateX(-50%);pointer-events:none}
+.pet-hug svg{display:block;width:100%;height:100%;image-rendering:pixelated}
+
+/* 窗户：常驻，位置和大小由 JS 写入 --win-x / --win-b / --win-s */
+.rm-window{position:absolute;z-index:1;left:var(--win-x,28%);bottom:var(--win-b,196px);width:92px;height:72px;transform:translateX(-50%) scale(var(--win-s,1));transform-origin:50% 100%;background:#8c5e3d;border:3px solid #5a3d2b;box-shadow:4px 4px 0 #5a3d2b2e;pointer-events:none}
+.rm-window .rw-view{inset:3px}
+.rm-window:before,.rm-window:after{content:"";position:absolute;z-index:2;background:#8c5e3d}
+.rm-window:before{left:50%;top:3px;bottom:3px;width:4px;margin-left:-2px}
+.rm-window:after{top:50%;left:3px;right:3px;height:4px;margin-top:-2px}
+.rm-sill{position:absolute;z-index:3;left:-12px;right:-12px;bottom:-12px;height:9px;background:#d9a571;border:3px solid #5a3d2b;box-shadow:0 3px 0 #5a3d2b30}
+.rm-cur,.rm-val{display:none;position:absolute;z-index:4}
+.has-curtain .rm-cur,.has-curtain .rm-val{display:block}
+.rm-cur{top:-8px;width:36px;height:96px}
+.rm-cur.l{left:-20px}
+.rm-cur.r{right:-20px;transform:scaleX(-1)}
+.rm-val{z-index:5;left:-24px;right:-24px;top:-17px;height:24px}
+.rm-val:before{content:"";position:absolute;left:-6px;right:-6px;top:-6px;height:6px;background:#8c5e3d;border:2px solid #5a3d2b}
+.rm-cur svg,.rm-val svg{display:block;width:100%;height:100%;image-rendering:pixelated}
+
+/* 家具 */
+.rm-fur{position:absolute;transform:translateX(-50%);pointer-events:none}
+.rm-fur svg{position:relative;display:block;width:100%;height:100%;image-rendering:pixelated}
+.rm-fur.floor:before{content:"";position:absolute;left:8%;right:8%;bottom:-3px;height:5px;background:#5a3d2b;opacity:.22}
+.rm-fur.is-new{animation:rm-in .36s steps(3,end)}
+@keyframes rm-in{from{opacity:0;translate:0 -9px}to{opacity:1;translate:0 0}}
+.rm-glow{position:absolute;left:50%;top:88%;width:150px;height:150px;transform:translate(-50%,-50%);background:radial-gradient(closest-side,#fff3b0,#fff3b000);opacity:0;transition:opacity .8s;pointer-events:none}
+#petStage[data-time="night"] .rm-glow,#petStage[data-time="dusk"] .rm-glow,#petStage.is-asleep .rm-glow{opacity:.85}
+.rm-cover{display:none}
+#petStage.sleep-bed .rm-cover{display:block}
+
+/* 页脚连点 5 次时不选中文字 */
+footer,.small-note{user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;touch-action:manipulation}
+footer{padding-bottom:14px}
+/* 调试面板：点按钮不选中文字，只有导出的布局文本可选 */
+.cheat-panel,.cheat-panel *{user-select:none;-webkit-user-select:none}
+.cheat-panel .layout-out{user-select:all;-webkit-user-select:all}
+
+/* 舞台下方的「摆家具」栏 */
+.deco-toggle{padding:5px 9px;background:#eaf4e4;border:2px solid #7f9c7c;border-radius:4px;box-shadow:2px 2px 0 #d2e0c9;font-size:10px;font-weight:800;color:#46654d}
+.deco-toggle.on{background:#6ea97c;color:#fff;border-color:#41694f;box-shadow:2px 2px 0 #41694f}
+.deco-toggle:active{transform:translate(1px,1px);box-shadow:none}
+.deco-bar{margin-top:8px;padding:8px;background:#fffdf2;border:3px solid #7f9c7c;box-shadow:3px 3px 0 #cfddc6;animation:px-toast-in .15s steps(2,end)}
+.deco-list{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px}
+.deco-item{min-width:0;display:grid;justify-items:center;gap:2px;padding:5px 1px 4px;background:#f6faf0;border:2px solid #cfdfc8;line-height:1.2}
+.deco-item:active{transform:translate(1px,1px)}
+.deco-item .ic{display:grid;place-items:center;width:30px;height:30px}
+.deco-item .ic svg{display:block;width:100%;height:100%;image-rendering:pixelated}
+.deco-item b{max-width:100%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:9px}
+.deco-item em{font-style:normal;font-size:8.5px;color:#8a9c8c}
+.deco-item.on{background:#f0f8e9;border-color:#6ea97c;box-shadow:inset 0 0 0 1px #6ea97c}
+.deco-item.on em{color:#3f8a50;font-weight:900}
+.deco-item.buy em{color:#a4842f}
+.deco-item.poor{opacity:.5}
+.deco-tip{margin:7px 0 0;text-align:center;font-size:9px;color:#8a9c8c}
+
+/* 窗帘挂上去的那一下 */
+#petStage.cur-in .rm-cur,#petStage.cur-in .rm-val{animation:rm-in .4s steps(3,end)}
