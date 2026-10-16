@@ -1,0 +1,20 @@
+plugins { id 'com.android.application' }
+android {
+    namespace 'io.github.mimimifan.boobo'
+    compileSdk 35
+    defaultConfig { applicationId 'io.github.mimimifan.boobo'; minSdk 26; targetSdk 35; versionCode 1; versionName '1.0.0-test1' }
+    sourceSets.main.assets.srcDirs = [layout.buildDirectory.dir('gameAssets')]
+}
+dependencies { implementation 'androidx.webkit:webkit:1.12.1' }
+tasks.register('prepareGame', Copy) {
+    from(rootProject.projectDir.parentFile) { include 'index.html', 'css/**', 'js/**', 'assets/**', 'site.webmanifest', 'LICENSE', 'NOTICE' }
+    into layout.buildDirectory.dir('gameAssets/www')
+    doLast {
+        def save = layout.buildDirectory.file('gameAssets/www/js/boobo-save.js').get().asFile
+        def original = save.getText('UTF-8')
+        def needle = "var a=document.createElement('a'),url=URL.createObjectURL"
+        if (!original.contains(needle)) throw new GradleException('Save export integration needs review')
+        save.setText(original.replace(needle, "if(window.BooboAndroid){window.BooboAndroid.exportSave(text);message('请选择存档保存位置。');return;}var a=document.createElement('a'),url=URL.createObjectURL"), 'UTF-8')
+    }
+}
+tasks.named('preBuild').configure { dependsOn 'prepareGame' }
